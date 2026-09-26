@@ -1,0 +1,5 @@
+.git
+.git/
+Dockerfile
+README.md
+*.log
