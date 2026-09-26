@@ -11,7 +11,7 @@ COPY --from=tomcat /usr/local/tomcat/bin /opt/tomcat/bin
 COPY --from=tomcat /usr/local/tomcat/conf /opt/tomcat/conf
 COPY --from=tomcat /usr/local/tomcat/lib /opt/tomcat/lib
 
-COPY testapp1.war /opt/tomcat/webapps/ROOT.war
+COPY testapp.war /opt/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 

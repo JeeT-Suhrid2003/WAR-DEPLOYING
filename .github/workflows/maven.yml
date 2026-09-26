@@ -14,12 +14,10 @@ jobs:
 
       - name: Prepare WAR file
         run: |
-          if [ ! -f testapp1.war ]; then
-            jar -cvf testapp1.war index.html WEB-INF
-          fi
+          jar -cvf testapp.war index.html WEB-INF
 
       - name: Upload WAR artifact
-        run: mkdir -p staging && cp testapp1.war staging/
+        run: mkdir -p staging && cp testapp.war staging/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -43,4 +41,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/app:latest
+          tags: |
+            ${{ vars.DOCKERHUB_USERNAME }}/app:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/app:${{ github.run_number }}

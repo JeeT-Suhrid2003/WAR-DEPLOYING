@@ -19,6 +19,20 @@ pipeline {
             }
         }
 
+        stage('Build and Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_TOKEN')]) {
+                    sh '''
+                        echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
+                        docker build -t ejeet2026/app:${BUILD_NUMBER} -t ejeet2026/app:latest .
+                        docker push ejeet2026/app:${BUILD_NUMBER}
+                        docker push ejeet2026/app:latest
+                        docker logout
+                    '''
+                }
+            }
+        }
+
         stage('Deploy .WAR to Tomcat on Server B') {
             steps {
                 sshagent(['server-deployer-ssh-testing']) {
