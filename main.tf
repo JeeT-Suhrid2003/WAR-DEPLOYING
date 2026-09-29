@@ -182,7 +182,7 @@ resource "aws_ecs_cluster" "main" {
 resource "aws_ecs_task_definition" "app" {
   family                   = "ejeet-app-task"
   network_mode             = "bridge"
-  requires_compatibilities = ["FARGATE"]
+  requires_compatibilities = ["EC2"]
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
@@ -202,8 +202,8 @@ resource "aws_ecs_service" "main" {
   name            = "ejeet-app-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  desired_count   = 2
+  launch_type     = "EC2"
 
   network_configuration {
     subnets          = [aws_subnet.public_a.id, aws_subnet.public_b.id]
