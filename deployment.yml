@@ -16,7 +16,7 @@ spec:
         app: app
     spec:
       containers:
-      - image: ejeet2026/app:8
+      - image: ejeet2026/app:9
         imagePullPolicy: Always
         name: app
         resources: {}
